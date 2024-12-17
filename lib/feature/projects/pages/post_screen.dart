@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_management/core/data/post_model.dart';
-import 'package:project_management/feature/home/pages/post_detail_screen.dart';
+import 'package:project_management/routes.dart';
 
 class PostsScreen extends StatelessWidget {
   const PostsScreen({super.key});
@@ -24,11 +24,13 @@ class PostsScreen extends StatelessWidget {
           for (int i = 0; i < postList.length; i++) ...[
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PostDetailScreen(
-                          post: postList[i],
-                          index: i,
-                        )));
+                Navigator.of(context).pushNamed(
+                  AppRoutes.postDetail,
+                  arguments: {
+                    'post': postList[i],
+                    'index': i,
+                  },
+                );
               },
               child: Container(
                 width: double.infinity,

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_management/core/data/popular_topics_model.dart';
-import 'package:project_management/feature/home/pages/post_screen.dart';
+import 'package:project_management/routes.dart';
 
 import '../../../core/data/post_model.dart';
-import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -39,8 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 actions: [
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ProfileScreen()));
+                      Navigator.of(context).pushNamed(AppRoutes.profile);
                     },
                     child: const CircleAvatar(
                       backgroundImage: AssetImage("assets/profile.jpeg"),
@@ -235,8 +233,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: const EdgeInsets.only(right: 10),
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const PostsScreen()));
+                                Navigator.of(context)
+                                    .pushNamed(AppRoutes.posts);
                               },
                               child: Row(
                                 mainAxisAlignment:
