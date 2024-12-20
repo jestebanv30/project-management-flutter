@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_management/animation/show_animation.dart';
 
 import '../../../core/data/post_model.dart';
 
@@ -124,29 +123,29 @@ class PostDetailScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  ShowUpAnimation(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          for (int i = 0; i < post.tags.length; i++) ...[
-                            Padding(
-                              padding: const EdgeInsets.only(right: 15),
-                              child: Chip(
-                                  backgroundColor: const Color(0xffe7ebf6),
-                                  side: const BorderSide(
-                                      color: Colors.transparent),
-                                  label: Text(
-                                    post.tags[i],
-                                    style:
-                                        TextStyle(color: Colors.grey.shade700),
-                                  )),
-                            )
-                          ]
-                        ],
-                      ),
-                    ),
-                  ),
+                  // ShowUpAnimation(
+                  //   child: SingleChildScrollView(
+                  //     scrollDirection: Axis.horizontal,
+                  //     child: Row(
+                  //       children: [
+                  //         for (int i = 0; i < post.tags.length; i++) ...[
+                  //           Padding(
+                  //             padding: const EdgeInsets.only(right: 15),
+                  //             child: Chip(
+                  //                 backgroundColor: const Color(0xffe7ebf6),
+                  //                 side: const BorderSide(
+                  //                     color: Colors.transparent),
+                  //                 label: Text(
+                  //                   post.tags[i],
+                  //                   style:
+                  //                       TextStyle(color: Colors.grey.shade700),
+                  //                 )),
+                  //           )
+                  //         ]
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 10,
                   )
@@ -156,99 +155,99 @@ class PostDetailScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            ShowUpAnimation(
-              delay: 100,
-              child: Text(
-                "Replies(${post.comments}) ",
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-            ),
+            // ShowUpAnimation(
+            //   delay: 100,
+            //   child: Text(
+            //     "Replies(${post.comments}) ",
+            //     style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            //         color: Colors.black, fontWeight: FontWeight.bold),
+            //   ),
+            // ),
             const SizedBox(
               height: 20,
             ),
-            Expanded(
-                child: ShowUpAnimation(
-              delay: 200,
-              child: ListView.builder(
-                  itemCount: 10,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(15),
-                      margin: const EdgeInsets.only(top: 15),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Theme.of(context).primaryColor,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.shade300,
-                              blurRadius: 10,
-                            )
-                          ]),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.grey.shade300,
-                              child: const Icon(Icons.person),
-                            ),
-                            title: Text(
-                              "George Embolo",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(
-                              "3m ago",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Text(
-                            "Keep it Up nice and cool , can not wait for next Topic",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.thumb_up_alt_outlined,
-                                color: Colors.grey,
-                                size: 20,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "12 Likes",
-                                style: const TextStyle(fontSize: 13),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-            )),
+            // Expanded(
+            //     child: ShowUpAnimation(
+            //   delay: 200,
+            //   child: ListView.builder(
+            //       itemCount: 10,
+            //       shrinkWrap: true,
+            //       itemBuilder: (context, index) {
+            //         return Container(
+            //           width: double.infinity,
+            //           padding: const EdgeInsets.all(15),
+            //           margin: const EdgeInsets.only(top: 15),
+            //           decoration: BoxDecoration(
+            //               borderRadius: BorderRadius.circular(20),
+            //               color: Theme.of(context).primaryColor,
+            //               boxShadow: [
+            //                 BoxShadow(
+            //                   color: Colors.grey.shade300,
+            //                   blurRadius: 10,
+            //                 )
+            //               ]),
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               ListTile(
+            //                 contentPadding: EdgeInsets.zero,
+            //                 leading: CircleAvatar(
+            //                   backgroundColor: Colors.grey.shade300,
+            //                   child: const Icon(Icons.person),
+            //                 ),
+            //                 title: Text(
+            //                   "George Embolo",
+            //                   style: Theme.of(context)
+            //                       .textTheme
+            //                       .titleMedium
+            //                       ?.copyWith(
+            //                           color: Colors.black,
+            //                           fontWeight: FontWeight.bold),
+            //                 ),
+            //                 subtitle: Text(
+            //                   "3m ago",
+            //                   style: Theme.of(context)
+            //                       .textTheme
+            //                       .bodySmall
+            //                       ?.copyWith(
+            //                           color: Colors.grey,
+            //                           fontWeight: FontWeight.bold),
+            //                 ),
+            //               ),
+            //               Text(
+            //                 "Keep it Up nice and cool , can not wait for next Topic",
+            //                 style: Theme.of(context)
+            //                     .textTheme
+            //                     .bodySmall
+            //                     ?.copyWith(
+            //                         color: Colors.grey,
+            //                         fontWeight: FontWeight.bold),
+            //               ),
+            //               const SizedBox(
+            //                 height: 10,
+            //               ),
+            //               const Row(
+            //                 mainAxisAlignment: MainAxisAlignment.start,
+            //                 children: [
+            //                   Icon(
+            //                     Icons.thumb_up_alt_outlined,
+            //                     color: Colors.grey,
+            //                     size: 20,
+            //                   ),
+            //                   SizedBox(
+            //                     width: 5,
+            //                   ),
+            //                   Text(
+            //                     "12 Likes",
+            //                     style: const TextStyle(fontSize: 13),
+            //                   )
+            //                 ],
+            //               ),
+            //             ],
+            //           ),
+            //         );
+            //       }),
+            // )),
           ],
         ),
       ),
