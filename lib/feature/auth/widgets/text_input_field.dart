@@ -5,27 +5,29 @@ import 'package:project_management/core/controller/login_controller.dart';
 import 'package:project_management/core/controller/register_controller.dart';
 import 'package:project_management/core/utils/app_color.dart';
 import 'package:project_management/feature/auth/widgets/textfield_sufix.dart';
+import 'package:project_management/routes.dart';
 
 class TextInputField extends StatelessWidget {
+  final bool focus;
+  final String hint;
+  final TextEditingController controller;
+  final VoidCallback onTap;
+  final ValueChanged<String>? onChange;
+  final VoidCallback? showPassword;
+  final bool? hideText;
+  final bool? correct;
+
   TextInputField(
       {super.key,
       required this.focus,
       required this.hint,
       required this.controller,
       required this.onTap,
-      required this.onChange,
+      this.onChange,
       this.showPassword,
       this.hideText,
       this.correct});
 
-  final bool focus;
-  final String hint;
-  final TextEditingController controller;
-  final VoidCallback onTap;
-  final VoidCallback onChange;
-  final VoidCallback? showPassword;
-  final bool? hideText;
-  final bool? correct;
   final _registerController = Get.put(RegisterController());
   final _loginController = Get.put(LoginController());
 
@@ -44,22 +46,29 @@ class TextInputField extends StatelessWidget {
         controller: controller,
         onTap: onTap,
         onTapOutside: (event) {
-          _registerController.onTapOutside(context);
-          _loginController.onTapOutside(context);
+          if (Get.currentRoute == AppRoutes.register) {
+            _registerController.onTapOutside(context);
+          } else if (Get.currentRoute == AppRoutes.login) {
+            _loginController.onTapOutside(context);
+          }
         },
         onChanged: (value) {
-          onChange();
+          if (onChange != null) {
+            onChange!(value);
+          }
         },
-        obscureText: hideText ?? false,
+        obscureText: hideText ?? true,
         style:
             const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         decoration: InputDecoration(
           filled: true,
-          suffixIcon: hideText == null
-              ? correct == true
+          suffixIcon: hint == 'you@example.com' || hint == 'Introduce tu nombre'
+              ? (correct == true && controller.text.isNotEmpty)
                   ? const TextfieldSufix(icon: Icons.done)
                   : null
-              : _registerController.password.value.text.toString().isNotEmpty
+              : hint == 'Introduce tu contraseña' ||
+                      hint == 'Elija una contraseña segura'
+                  //: controller.text.isNotEmpty
                   ? GestureDetector(
                       onTap: showPassword,
                       child: hideText!

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management/core/controller/login_controller.dart';
 import 'package:project_management/feature/auth/widgets/account_buttom.dart';
-import 'package:project_management/feature/auth/widgets/login_input_form.dart';
+import 'package:project_management/feature/auth/widgets/auth_form.dart';
 import 'package:project_management/feature/auth/widgets/register_options.dart';
 import 'package:project_management/feature/auth/widgets/top_bar.dart';
 import 'package:project_management/routes.dart';
@@ -27,7 +27,7 @@ class LoginBody extends StatelessWidget {
               children: <Widget>[
                 const SizedBox(height: 30),
                 const TopBar(
-                  title: "Iniciar Sesión",
+                  title: "Iniciar sesión",
                   routeName: AppRoutes.welcome,
                 ),
                 const SizedBox(height: 50),
@@ -37,12 +37,35 @@ class LoginBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 const RegisterOptions(),
-                LoginForm(),
+                AuthForm(
+                  fields: [
+                    FormFieldData(
+                      label: 'Correo electrónico',
+                      hint: 'you@example.com',
+                      focus: loginController.emailFocus,
+                      controller: loginController.email,
+                      correct: loginController.correctEmail,
+                      onTap: loginController.onFocusEmail,
+                      onChange: loginController.validateEmail,
+                    ),
+                    FormFieldData(
+                      label: 'Contraseña',
+                      hint: 'Introduce tu contraseña',
+                      focus: loginController.passwordFocus,
+                      controller: loginController.password,
+                      correct: RxBool(true),
+                      onTap: loginController.onFocusPassword,
+                      hideText: loginController.showPassword,
+                      showPassword: () => loginController.showPassword.toggle(),
+                    ),
+                  ],
+                ),
                 Obx(
                   () => AccountButtom(
                     text: "Iniciar sesión",
                     loading: loginController.loading.value,
                     onTap: () {
+                      loginController.clearFieldLogin();
                       loginController.loginAccount();
                     },
                   ),
@@ -52,6 +75,7 @@ class LoginBody extends StatelessWidget {
                   alignment: Alignment.center,
                   child: GestureDetector(
                     onTap: () {
+                      loginController.clearFieldLogin();
                       Get.toNamed(AppRoutes.register);
                     },
                     child: RichText(
@@ -60,7 +84,7 @@ class LoginBody extends StatelessWidget {
                             text: '¿No tienes cuenta? ',
                             style: TextStyle(color: Colors.grey)),
                         TextSpan(
-                            text: 'Regístrate',
+                            text: ' Regístrate',
                             style: TextStyle(color: Colors.white)),
                       ]),
                     ),

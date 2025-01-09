@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:project_management/core/services/auth_firebase_service.dart';
 import 'package:project_management/core/utils/utiils.dart';
 
 class LoginController extends GetxController {
   RxBool emailFocus = false.obs;
   RxBool passwordFocus = false.obs;
   RxBool correctEmail = false.obs;
-  RxBool showPassword = false.obs;
+  RxBool showPassword = true.obs;
   RxBool loading = false.obs;
   final email = TextEditingController().obs;
   final password = TextEditingController().obs;
@@ -37,12 +36,17 @@ class LoginController extends GetxController {
     //AuthFirebaseService.loginAccount();
   }
 
+  void clearFieldLogin() {
+    email.call().clear();
+    password.call().clear();
+  }
+
   void setLoading(bool value) {
     loading.value = value;
   }
 
-  void validateEmail() {
-    correctEmail.value = Utils.validateEmail(email.value.text.toString());
+  void validateEmail(String value) {
+    correctEmail.value = Utils.validateEmail(value);
   }
 
   void onFocusEmail() {

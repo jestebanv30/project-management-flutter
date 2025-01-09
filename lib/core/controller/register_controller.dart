@@ -10,19 +10,20 @@ class RegisterController extends GetxController {
   RxBool passwordFocus = false.obs;
   RxBool correctEmail = false.obs;
   RxBool correctName = false.obs;
-  RxBool showPassword = false.obs;
+  RxBool showPassword = true.obs;
   RxBool loading = false.obs;
 
   final email = TextEditingController().obs;
   final name = TextEditingController().obs;
   final password = TextEditingController().obs;
 
-  void validateEmail() {
-    correctEmail.value = Utils.validateEmail(email.value.text.toString());
+  void validateEmail(String value) {
+    correctEmail.value = Utils.validateEmail(value);
   }
 
-  void validateName() {
-    correctName.value = name.value.text.toString().length > 5;
+  // Ajustar validaciones del name
+  void validateName(String value) {
+    correctName.value = value.length > 5;
   }
 
   void setLoading(bool value) {
@@ -61,6 +62,12 @@ class RegisterController extends GetxController {
       return;
     }
     AuthFirebaseService.createAccount();
+  }
+
+  void clearFieldRegister() {
+    name.call().clear();
+    email.call().clear();
+    password.call().clear();
   }
 
   void onFocusEmail() {
