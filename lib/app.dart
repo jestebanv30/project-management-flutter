@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_management/core/utils/app_color.dart';
 import 'package:project_management/core/utils/theme_provider.dart';
 import 'package:project_management/routes.dart';
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData(
         // Tema claro (pantallas de home)
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -35,8 +36,8 @@ class MyApp extends StatelessWidget {
       themeMode:
           themeProvider.themeMode, // Cambia dinámicamente segun el estado
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.login,
-      onGenerateRoute: AppRoutes.generateRoute,
+      initialRoute: AppRoutes.welcome,
+      getPages: AppRoutes.routes,
     );
   }
 }

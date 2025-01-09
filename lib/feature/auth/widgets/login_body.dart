@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_management/core/controller/login_controller.dart';
 import 'package:project_management/feature/auth/widgets/account_buttom.dart';
-import 'package:project_management/feature/auth/widgets/login_bar.dart';
 import 'package:project_management/feature/auth/widgets/login_input_form.dart';
 import 'package:project_management/feature/auth/widgets/register_options.dart';
+import 'package:project_management/feature/auth/widgets/top_bar.dart';
 import 'package:project_management/routes.dart';
 
 class LoginBody extends StatelessWidget {
@@ -26,7 +26,10 @@ class LoginBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 30),
-                const LoginBar(),
+                const TopBar(
+                  title: "Iniciar Sesión",
+                  routeName: AppRoutes.welcome,
+                ),
                 const SizedBox(height: 50),
                 const Text(
                   'Inicia sesión con algunas de las siguientes opciones.',
@@ -49,7 +52,7 @@ class LoginBody extends StatelessWidget {
                   alignment: Alignment.center,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed(AppRoutes.signUp);
+                      Get.toNamed(AppRoutes.register);
                     },
                     child: RichText(
                       text: const TextSpan(children: [

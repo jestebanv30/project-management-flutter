@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AccountButtom extends StatelessWidget {
+  final String text;
+  final bool loading;
+  final VoidCallback onTap;
+  final String? tag;
   const AccountButtom(
       {super.key,
       required this.text,
       required this.loading,
       required this.onTap,
       this.tag});
-
-  final String text;
-  final bool loading;
-  final VoidCallback onTap;
-  final String? tag;
 
   @override
   Widget build(BuildContext context) {
