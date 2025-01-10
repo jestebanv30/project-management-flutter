@@ -7,7 +7,7 @@ import 'package:project_management/core/utils/app_color.dart';
 import 'package:project_management/feature/auth/widgets/textfield_sufix.dart';
 import 'package:project_management/routes.dart';
 
-class TextInputField extends StatelessWidget {
+class TextInputField extends StatefulWidget {
   final bool focus;
   final String hint;
   final TextEditingController controller;
@@ -17,7 +17,7 @@ class TextInputField extends StatelessWidget {
   final bool? hideText;
   final bool? correct;
 
-  TextInputField(
+  const TextInputField(
       {super.key,
       required this.focus,
       required this.hint,
@@ -27,6 +27,13 @@ class TextInputField extends StatelessWidget {
       this.showPassword,
       this.hideText,
       this.correct});
+
+  @override
+  _TextInputFieldState createState() => _TextInputFieldState();
+}
+
+class _TextInputFieldState extends State<TextInputField> {
+  bool showEyeIcon = false; // Controla si el ícono debe mostrarse
 
   final _registerController = Get.put(RegisterController());
   final _loginController = Get.put(LoginController());
@@ -38,13 +45,14 @@ class TextInputField extends StatelessWidget {
       padding: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        gradient: focus
-            ? const LinearGradient(colors: [Colors.purpleAccent, Colors.pink])
+        gradient: widget.focus
+            ? const LinearGradient(
+                colors: [Colors.blueAccent, Colors.greenAccent])
             : null,
       ),
       child: TextFormField(
-        controller: controller,
-        onTap: onTap,
+        controller: widget.controller,
+        onTap: widget.onTap,
         onTapOutside: (event) {
           if (Get.currentRoute == AppRoutes.register) {
             _registerController.onTapOutside(context);
@@ -53,34 +61,40 @@ class TextInputField extends StatelessWidget {
           }
         },
         onChanged: (value) {
-          if (onChange != null) {
-            onChange!(value);
+          setState(() {
+            showEyeIcon = value.isNotEmpty;
+          });
+
+          if (widget.onChange != null) {
+            widget.onChange!(value);
           }
         },
-        obscureText: hideText ?? true,
+        obscureText: widget.hideText ?? true,
         style:
             const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         decoration: InputDecoration(
           filled: true,
-          suffixIcon: hint == 'you@example.com' || hint == 'Introduce tu nombre'
-              ? (correct == true && controller.text.isNotEmpty)
+          suffixIcon: widget.hint == 'you@example.com' ||
+                  widget.hint == 'Introduce tu nombre'
+              ? (widget.correct == true && widget.controller.text.isNotEmpty)
                   ? const TextfieldSufix(icon: Icons.done)
                   : null
-              : hint == 'Introduce tu contraseña' ||
-                      hint == 'Elija una contraseña segura'
-                  //: controller.text.isNotEmpty
-                  ? GestureDetector(
-                      onTap: showPassword,
-                      child: hideText!
-                          ? const TextfieldSufix(
-                              icon: FontAwesomeIcons.eye,
-                              size: 13,
-                            )
-                          : const TextfieldSufix(
-                              icon: FontAwesomeIcons.eyeLowVision,
-                              size: 13,
-                            ),
-                    )
+              : widget.hint == 'Introduce tu contraseña' ||
+                      widget.hint == 'Elija una contraseña segura'
+                  ? (showEyeIcon // Muestra el ícono solo si el usuario ha escrito algo
+                      ? GestureDetector(
+                          onTap: widget.showPassword,
+                          child: widget.hideText!
+                              ? const TextfieldSufix(
+                                  icon: FontAwesomeIcons.eyeLowVision,
+                                  size: 13,
+                                )
+                              : const TextfieldSufix(
+                                  icon: FontAwesomeIcons.eye,
+                                  size: 13,
+                                ),
+                        )
+                      : const SizedBox())
                   : const SizedBox(),
           fillColor: primaryColor,
           border: OutlineInputBorder(
@@ -89,7 +103,7 @@ class TextInputField extends StatelessWidget {
           hoverColor: Colors.pinkAccent,
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-          hintText: hint,
+          hintText: widget.hint,
           hintStyle: const TextStyle(
               color: Colors.grey, fontWeight: FontWeight.normal, fontSize: 12),
         ),

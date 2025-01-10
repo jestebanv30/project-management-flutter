@@ -26,7 +26,7 @@ class AccountButtom extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               gradient: const LinearGradient(
-                  colors: [Colors.purpleAccent, Colors.pinkAccent]),
+                  colors: [Colors.blueAccent, Colors.greenAccent]),
             ),
             child: loading
                 ? const SizedBox(

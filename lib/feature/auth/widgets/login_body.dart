@@ -25,12 +25,12 @@ class LoginBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 const TopBar(
                   title: "Iniciar sesión",
                   routeName: AppRoutes.welcome,
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 const Text(
                   'Inicia sesión con algunas de las siguientes opciones.',
                   style: TextStyle(color: Colors.grey),
@@ -60,6 +60,13 @@ class LoginBody extends StatelessWidget {
                     ),
                   ],
                 ),
+                // const Text(
+                //   'Inicia sesión con algunas de las siguientes opciones.',
+                //   style: TextStyle(color: Colors.grey),
+                // ),
+                // const SizedBox(height: 20),
+                // const RegisterOptions(),
+                // const SizedBox(height: 50),
                 Obx(
                   () => AccountButtom(
                     text: "Iniciar sesión",
@@ -85,7 +92,7 @@ class LoginBody extends StatelessWidget {
                             style: TextStyle(color: Colors.grey)),
                         TextSpan(
                             text: ' Regístrate',
-                            style: TextStyle(color: Colors.white)),
+                            style: TextStyle(color: Colors.blue)),
                       ]),
                     ),
                   ),

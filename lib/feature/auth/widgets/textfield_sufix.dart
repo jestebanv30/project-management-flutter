@@ -15,22 +15,15 @@ class TextfieldSufix extends StatelessWidget {
         height: 40,
         width: 40,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: darkBackgroundColor,
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.pinkAccent.withOpacity(.2),
-                  offset: const Offset(1, 0)),
-              BoxShadow(
-                  color: Colors.pinkAccent.withOpacity(.2),
-                  offset: const Offset(0, 1)),
-              BoxShadow(
-                  color: Colors.pinkAccent.withOpacity(.2),
-                  offset: const Offset(-1, 0)),
-              BoxShadow(
-                  color: Colors.pinkAccent.withOpacity(.2),
-                  offset: const Offset(0, -1))
-            ]),
+          borderRadius: BorderRadius.circular(12),
+          color: darkBackgroundColor,
+          // boxShadow: const [
+          //   BoxShadow(color: Colors.grey, offset: Offset(1, 0)),
+          //   BoxShadow(color: Colors.grey, offset: Offset(0, 1)),
+          //   BoxShadow(color: Colors.grey, offset: Offset(-1, 0)),
+          //   BoxShadow(color: Colors.grey, offset: Offset(0, -1))
+          // ],
+        ),
         child: Icon(
           icon,
           color: Colors.white70,

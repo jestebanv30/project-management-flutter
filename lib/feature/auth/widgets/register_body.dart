@@ -21,7 +21,7 @@ class RegisterBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             const TopBar(
               title: 'Registrarse',
@@ -93,7 +93,7 @@ class RegisterBody extends StatelessWidget {
                       ),
                       TextSpan(
                         text: ' Inicia sesión',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.blue),
                       )
                     ],
                   ),
