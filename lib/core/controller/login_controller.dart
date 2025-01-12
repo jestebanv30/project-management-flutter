@@ -9,8 +9,8 @@ class LoginController extends GetxController {
   RxBool correctEmail = false.obs;
   RxBool showPassword = true.obs;
   RxBool loading = false.obs;
-  final email = TextEditingController().obs;
-  final password = TextEditingController().obs;
+  final email = TextEditingController();
+  final password = TextEditingController();
 
   void loginAccount() {
     if (!correctEmail.value) {
@@ -37,8 +37,9 @@ class LoginController extends GetxController {
   }
 
   void clearFieldLogin() {
-    email.call().clear();
-    password.call().clear();
+    setLoading(false);
+    //email.call().clear();
+    //password.call().clear();
   }
 
   void setLoading(bool value) {

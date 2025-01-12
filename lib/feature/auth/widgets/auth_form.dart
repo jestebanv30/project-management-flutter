@@ -37,7 +37,7 @@ class AuthForm extends StatelessWidget {
                   () => TextInputField(
                     focus: field.focus.value,
                     hint: field.hint,
-                    controller: field.controller.value,
+                    controller: field.controller,
                     onTap: field.onTap ?? () {},
                     correct: field.correct.value,
                     onChange: field.onChange ?? (value) {},
@@ -59,7 +59,7 @@ class FormFieldData {
   final String label;
   final String hint;
   final RxBool focus;
-  final Rx<TextEditingController> controller;
+  final TextEditingController controller;
   final RxBool correct;
   final VoidCallback? onTap;
   final ValueChanged<String>? onChange;

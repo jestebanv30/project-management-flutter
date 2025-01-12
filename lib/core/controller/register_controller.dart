@@ -13,9 +13,9 @@ class RegisterController extends GetxController {
   RxBool showPassword = true.obs;
   RxBool loading = false.obs;
 
-  final email = TextEditingController().obs;
-  final name = TextEditingController().obs;
-  final password = TextEditingController().obs;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   void validateEmail(String value) {
     correctEmail.value = Utils.validateEmail(value);
@@ -30,44 +30,61 @@ class RegisterController extends GetxController {
     loading.value = value;
   }
 
-  void createAccount() {
-    if (!correctName.value) {
-      Utils.showSnackBar(
-          'Advertencia',
-          'Ingresa el nombre correctamente',
-          const Icon(
-            FontAwesomeIcons.triangleExclamation,
-            color: Colors.pink,
-          ));
-      return;
+  void createAccount(String name, String email, String password) async {
+    // if (!correctName.value) {
+    //   Utils.showSnackBar(
+    //       'Advertencia',
+    //       'Ingresa el nombre correctamente',
+    //       const Icon(
+    //         FontAwesomeIcons.triangleExclamation,
+    //         color: Colors.pink,
+    //       ));
+    //   print(correctName.value.toString());
+    //   return;
+    // }
+    // if (!correctEmail.value) {
+    //   Utils.showSnackBar(
+    //       'Advertencia',
+    //       'Ingresa el correo correctamente',
+    //       const Icon(
+    //         FontAwesomeIcons.triangleExclamation,
+    //         color: Colors.pink,
+    //       ));
+    //   return;
+    // }
+    // if (passwordController.text.trim().length < 5) {
+    //   Utils.showSnackBar(
+    //       'Advertencia',
+    //       'La longitud de la contraseña debe ser mayor a 5',
+    //       const Icon(
+    //         FontAwesomeIcons.triangleExclamation,
+    //         color: Colors.pink,
+    //       ));
+    //   return;
+    // }
+    try {
+      setLoading(true);
+
+      await AuthFirebaseService().createAccount(email, password, name);
+
+      Utils.showSnackBar('Registrado', 'Cuenta creada exitosamente',
+          const Icon(Icons.done, color: Colors.white));
+
+      clearFieldRegister();
+    } catch (e) {
+      print('Error de Firebase: $e');
+      Utils.showSnackBar('Error', Utils.extractFirebaseError(e.toString()),
+          const Icon(Icons.error, color: Colors.red));
+    } finally {
+      setLoading(false);
     }
-    if (!correctEmail.value) {
-      Utils.showSnackBar(
-          'Advertencia',
-          'Ingresa el correo correctamente',
-          const Icon(
-            FontAwesomeIcons.triangleExclamation,
-            color: Colors.pink,
-          ));
-      return;
-    }
-    if (password.value.text.toString().length < 6) {
-      Utils.showSnackBar(
-          'Advertencia',
-          'La longitud de la contraseña debe ser mayor a 5',
-          const Icon(
-            FontAwesomeIcons.triangleExclamation,
-            color: Colors.pink,
-          ));
-      return;
-    }
-    AuthFirebaseService.createAccount();
   }
 
   void clearFieldRegister() {
-    name.call().clear();
-    email.call().clear();
-    password.call().clear();
+    setLoading(false);
+    nameController.clear();
+    emailController.clear();
+    passwordController.clear();
   }
 
   void onFocusEmail() {

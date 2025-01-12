@@ -14,7 +14,7 @@ class Utils {
 
   static void showSnackBar(String title, String message, Widget icon) {
     Get.showSnackbar(GetSnackBar(
-      backgroundColor: primaryColor.withOpacity(.4),
+      backgroundColor: primaryColor,
       title: title,
       isDismissible: true,
       duration: const Duration(milliseconds: 2000),

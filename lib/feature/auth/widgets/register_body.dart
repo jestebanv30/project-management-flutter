@@ -40,7 +40,7 @@ class RegisterBody extends StatelessWidget {
                   label: 'Nombre',
                   hint: 'Introduce tu nombre',
                   focus: registerController.nameFocus,
-                  controller: registerController.name,
+                  controller: registerController.nameController,
                   correct: registerController.correctName,
                   onTap: registerController.onFocusName,
                   onChange: registerController.validateName,
@@ -49,7 +49,7 @@ class RegisterBody extends StatelessWidget {
                   label: 'Correo electrónico',
                   hint: 'you@example.com',
                   focus: registerController.emailFocus,
-                  controller: registerController.email,
+                  controller: registerController.emailController,
                   correct: registerController.correctEmail,
                   onTap: registerController.onFocusEmail,
                   onChange: registerController.validateEmail,
@@ -58,7 +58,7 @@ class RegisterBody extends StatelessWidget {
                   label: 'Contraseña',
                   hint: 'Elija una contraseña segura',
                   focus: registerController.passwordFocus,
-                  controller: registerController.password,
+                  controller: registerController.passwordController,
                   correct: RxBool(true),
                   onTap: registerController.onFocusPassword,
                   hideText: registerController.showPassword,
@@ -72,7 +72,13 @@ class RegisterBody extends StatelessWidget {
                 loading: registerController.loading.value,
                 onTap: () {
                   registerController.clearFieldRegister();
-                  registerController.createAccount();
+
+                  String name = registerController.nameController.text.trim();
+                  String email = registerController.emailController.text.trim();
+                  String password =
+                      registerController.passwordController.text.trim();
+
+                  registerController.createAccount(email, password, name);
                 },
               ),
             ),
