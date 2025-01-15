@@ -16,6 +16,7 @@ class AuthFirebaseService {
         await database.collection('Accounts').doc(idDoc).set({
           'name': name,
           'email': email,
+          'createdAt': FieldValue.serverTimestamp(),
         });
       }
     } catch (e) {

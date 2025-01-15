@@ -71,8 +71,6 @@ class RegisterBody extends StatelessWidget {
                 text: 'Regístrate',
                 loading: registerController.loading.value,
                 onTap: () {
-                  registerController.clearFieldRegister();
-
                   String name = registerController.nameController.text.trim();
                   String email = registerController.emailController.text.trim();
                   String password =
