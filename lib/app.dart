@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           themeProvider.themeMode, // Cambia dinámicamente segun el estado
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.welcome,
-      getPages: AppRoutes.routes,
+      getPages: AppRoutes.pages,
     );
   }
 }

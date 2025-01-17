@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:project_management/core/middleware/auth_middleware.dart';
 import 'package:project_management/feature/auth/pages/login_screen.dart';
 import 'package:project_management/feature/auth/pages/register_screen.dart';
 import 'package:project_management/feature/home/pages/home_screen.dart';
@@ -16,13 +17,22 @@ class AppRoutes {
   static const String register = '/register';
   static const String welcome = '/welcome';
 
-  static final routes = [
+  static List<GetPage> pages = [
     GetPage(name: welcome, page: () => const WelcomeScreen()),
     GetPage(name: register, page: () => const RegisterScreen()),
     GetPage(name: login, page: () => const LoginScreen()),
-    GetPage(name: posts, page: () => const PostsScreen()),
-    GetPage(name: profile, page: () => const ProfileScreen()),
-    GetPage(name: home, page: () => const HomeScreen()),
+    GetPage(
+        name: posts,
+        page: () => const PostsScreen(),
+        middlewares: [AuthMiddleware()]),
+    GetPage(
+        name: profile,
+        page: () => const ProfileScreen(),
+        middlewares: [AuthMiddleware()]),
+    GetPage(
+        name: home,
+        page: () => const HomeScreen(),
+        middlewares: [AuthMiddleware()]),
     GetPage(
       name: postDetail,
       page: () => PostDetailScreen(

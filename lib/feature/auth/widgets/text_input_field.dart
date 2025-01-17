@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:project_management/core/controller/login_controller.dart';
-import 'package:project_management/core/controller/register_controller.dart';
+import 'package:project_management/core/controller/auth_controller.dart';
 import 'package:project_management/core/utils/app_color.dart';
 import 'package:project_management/feature/auth/widgets/textfield_sufix.dart';
-import 'package:project_management/routes.dart';
 
 class TextInputField extends StatefulWidget {
   final bool focus;
@@ -35,8 +33,8 @@ class TextInputField extends StatefulWidget {
 class _TextInputFieldState extends State<TextInputField> {
   bool showEyeIcon = false; // Controla si el ícono debe mostrarse
 
-  final _registerController = Get.put(RegisterController());
-  final _loginController = Get.put(LoginController());
+  final authController = Get.put(AuthController());
+  //final _loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +52,7 @@ class _TextInputFieldState extends State<TextInputField> {
         controller: widget.controller,
         onTap: widget.onTap,
         onTapOutside: (event) {
-          if (Get.currentRoute == AppRoutes.register) {
-            _registerController.onTapOutside(context);
-          } else if (Get.currentRoute == AppRoutes.login) {
-            _loginController.onTapOutside(context);
-          }
+          authController.onTapOutside(context);
         },
         onChanged: (value) {
           setState(() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_management/core/controller/register_controller.dart';
+import 'package:project_management/core/controller/auth_controller.dart';
 import 'package:project_management/feature/auth/widgets/account_buttom.dart';
 import 'package:project_management/feature/auth/widgets/auth_form.dart';
 import 'package:project_management/feature/auth/widgets/register_options.dart';
@@ -10,7 +10,7 @@ import 'package:project_management/routes.dart';
 class RegisterBody extends StatelessWidget {
   RegisterBody({super.key});
 
-  final registerController = Get.put(RegisterController());
+  final authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -39,44 +39,44 @@ class RegisterBody extends StatelessWidget {
                 FormFieldData(
                   label: 'Nombre',
                   hint: 'Introduce tu nombre',
-                  focus: registerController.nameFocus,
-                  controller: registerController.nameController,
-                  correct: registerController.correctName,
-                  onTap: registerController.onFocusName,
-                  onChange: registerController.validateName,
+                  focus: authController.nameFocus,
+                  controller: authController.nameController,
+                  correct: authController.correctName,
+                  onTap: authController.onFocusName,
+                  onChange: authController.validateName,
                 ),
                 FormFieldData(
                   label: 'Correo electrónico',
                   hint: 'you@example.com',
-                  focus: registerController.emailFocus,
-                  controller: registerController.emailController,
-                  correct: registerController.correctEmail,
-                  onTap: registerController.onFocusEmail,
-                  onChange: registerController.validateEmail,
+                  focus: authController.emailFocus,
+                  controller: authController.emailController,
+                  correct: authController.correctEmail,
+                  onTap: authController.onFocusEmail,
+                  onChange: authController.validateEmail,
                 ),
                 FormFieldData(
                   label: 'Contraseña',
                   hint: 'Elija una contraseña segura',
-                  focus: registerController.passwordFocus,
-                  controller: registerController.passwordController,
+                  focus: authController.passwordFocus,
+                  controller: authController.passwordController,
                   correct: RxBool(true),
-                  onTap: registerController.onFocusPassword,
-                  hideText: registerController.showPassword,
-                  showPassword: () => registerController.showPassword.toggle(),
+                  onTap: authController.onFocusPassword,
+                  hideText: authController.showPassword,
+                  showPassword: () => authController.showPassword.toggle(),
                 ),
               ],
             ),
             Obx(
               () => AccountButtom(
                 text: 'Regístrate',
-                loading: registerController.loading.value,
+                loading: authController.loading.value,
                 onTap: () {
-                  String name = registerController.nameController.text.trim();
-                  String email = registerController.emailController.text.trim();
+                  String name = authController.nameController.text.trim();
+                  String email = authController.emailController.text.trim();
                   String password =
-                      registerController.passwordController.text.trim();
+                      authController.passwordController.text.trim();
 
-                  registerController.createAccount(email, password, name);
+                  authController.createAccount(email, password, name);
                 },
               ),
             ),
@@ -85,8 +85,8 @@ class RegisterBody extends StatelessWidget {
               alignment: Alignment.center,
               child: GestureDetector(
                 onTap: () {
-                  registerController.clearFieldRegister();
-                  Get.toNamed(AppRoutes.login);
+                  authController.clearFieldRegister();
+                  Get.back();
                 },
                 child: RichText(
                   text: const TextSpan(
