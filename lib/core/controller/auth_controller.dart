@@ -39,70 +39,68 @@ class AuthController extends GetxController {
     correctName.value = nameRegex.hasMatch(value);
   }
 
-  void validatePassword(String value) {
+  bool isPasswordValid(String value) {
     final passwordRegex = RegExp(
-      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$',
+      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$',
     );
-    if (value.isEmpty) {
-      Utils.showSnackBar(
-        'Advertencia',
-        'La contraseña no puede estar vacía',
-        const Icon(Icons.warning, color: Colors.red),
-      );
-    } else if (!passwordRegex.hasMatch(value)) {
-      Utils.showSnackBar(
-        'Advertencia',
-        'La contraseña debe tener entre 8 y 32 caracteres, incluir al menos una letra minúscula, una letra mayúscula, un carácter especial y un dígito.',
-        const Icon(Icons.warning, color: Colors.red),
-      );
-    }
+    return passwordRegex.hasMatch(value);
   }
 
   void setLoading(bool value) {
     loading.value = value;
   }
 
-  Future<void> createAccount(String email, String password, String name) async {
-    if (name.isEmpty || email.isEmpty || password.isEmpty) {
+  bool validateFields(String email, String password, String name) {
+    if (email.isEmpty || password.isEmpty || name.isEmpty) {
       Utils.showSnackBar(
         'Advertencia',
-        'Por favor, completa todos los campos',
+        'Por favor, completa todos los campos.',
         const Icon(Icons.warning, color: Colors.red),
       );
-      return;
+      return false;
     }
     validateName(name);
     if (!correctName.value) {
       Utils.showSnackBar(
-          'Advertencia',
-          'El nombre de usuario debe tener al menos 4 caracteres',
-          const Icon(
-            FontAwesomeIcons.triangleExclamation,
-            color: Colors.pink,
-          ));
-      return;
+        'Advertencia',
+        'El nombre debe tener al menos 4 caracteres.',
+        const Icon(FontAwesomeIcons.triangleExclamation, color: Colors.pink),
+      );
+      return false;
     }
     if (!correctEmail.value) {
       Utils.showSnackBar(
-          'Advertencia',
-          'Ingresa el correo correctamente',
-          const Icon(
-            FontAwesomeIcons.triangleExclamation,
-            color: Colors.pink,
-          ));
-      return;
+        'Advertencia',
+        'Ingresa un correo válido.',
+        const Icon(FontAwesomeIcons.triangleExclamation, color: Colors.pink),
+      );
+      return false;
     }
-    if (passwordController.text.trim().length < 5) {
+    // if (!isPasswordValid(password)) {
+    //   Utils.showSnackBar(
+    //     'Advertencia',
+    //     'La contraseña debe tener entre 6 y 32 caracteres.',
+    //     const Icon(Icons.warning, color: Colors.red),
+    //   );
+    //   return false;
+    // }
+    if (password.length < 6 || password.length > 32) {
       Utils.showSnackBar(
           'Advertencia',
-          'La longitud de la contraseña debe ser mayor a 5',
+          'La longitud de la contraseña debe ser mayor o igual a 6 caracteres.',
           const Icon(
             FontAwesomeIcons.triangleExclamation,
             color: Colors.pink,
           ));
-      return;
+      return false;
     }
+    return true;
+  }
+
+  Future<void> createAccount(String email, String password, String name) async {
     try {
+      if (!validateFields(email, password, name)) return;
+
       setLoading(true);
 
       User? user =
@@ -110,18 +108,16 @@ class AuthController extends GetxController {
 
       if (user != null) {
         await saveCredentials(email, password);
-        Utils.showSnackBar('Éxito', 'Cuenta creada exitosamente',
+        Utils.showSnackBar('Éxito', 'Cuenta creada exitosamente.',
             const Icon(Icons.done, color: Colors.white));
         Get.toNamed(AppRoutes.home);
         clearFieldRegister();
       } else {
-        Utils.showSnackBar('Error', 'No se pudo registrar el usuario',
+        Utils.showSnackBar('Error', 'No se pudo registrar el usuario.',
             const Icon(Icons.error, color: Colors.red));
       }
     } catch (e) {
-      Utils.showSnackBar(
-          'Error durante el registro Firebase',
-          Utils.extractFirebaseError(e.toString()),
+      Utils.showSnackBar('Error', Utils.extractFirebaseError(e.toString()),
           const Icon(Icons.error, color: Colors.red));
     } finally {
       setLoading(false);
@@ -129,36 +125,9 @@ class AuthController extends GetxController {
   }
 
   Future<void> login(String email, String password) async {
-    if (email.isEmpty || password.isEmpty) {
-      Utils.showSnackBar(
-        'Advertencia',
-        'Por favor, completa todos los campos',
-        const Icon(Icons.warning, color: Colors.red),
-      );
-      return;
-    }
-    if (!correctEmail.value) {
-      Utils.showSnackBar(
-          'Advertencia',
-          'Ingresa el correo correctamente',
-          const Icon(
-            FontAwesomeIcons.triangleExclamation,
-            color: Colors.pink,
-          ));
-      return;
-    }
-    if (passwordController.text.trim().length < 5) {
-      Utils.showSnackBar(
-          'Advertencia',
-          'La longitud de la contraseña debe ser mayor a 5',
-          const Icon(
-            FontAwesomeIcons.triangleExclamation,
-            color: Colors.pink,
-          ));
-      return;
-    }
-
     try {
+      if (!validateFields(email, password, "name")) return;
+
       setLoading(true);
 
       User? user = await authFirebaseService.loginWithEmail(email, password);
@@ -167,14 +136,50 @@ class AuthController extends GetxController {
         Get.toNamed(AppRoutes.home);
         clearFieldRegister();
       } else {
-        Utils.showSnackBar('Error', 'No se pudo registrar el usuario',
+        Utils.showSnackBar('Error', 'No se iniciar sesión.',
             const Icon(Icons.error, color: Colors.red));
       }
     } catch (e) {
-      Utils.showSnackBar(
-          'Error durante el registro Firebase',
-          Utils.extractFirebaseError(e.toString()),
+      Utils.showSnackBar('Error', Utils.extractFirebaseError(e.toString()),
           const Icon(Icons.error, color: Colors.red));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  Future<void> loginWithGoogle() async {
+    try {
+      setLoading(true);
+
+      User? user = await authFirebaseService.loginWithGoogle();
+
+      if (user != null) {
+        Utils.showSnackBar(
+            'Éxito',
+            'Inicio de sesión exitoso.',
+            const Icon(
+              Icons.done,
+              color: Colors.white,
+            ));
+        Get.toNamed(AppRoutes.home);
+      } else {
+        Utils.showSnackBar(
+            'Advertencia',
+            'Inicio de sesión cancelado.',
+            const Icon(
+              Icons.warning,
+              color: Colors.red,
+            ));
+      }
+    } catch (e) {
+      print('Error de firebase: $e');
+      Utils.showSnackBar(
+          'Error',
+          Utils.extractFirebaseError(e.toString()),
+          const Icon(
+            Icons.error,
+            color: Colors.red,
+          ));
     } finally {
       setLoading(false);
     }

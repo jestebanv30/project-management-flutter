@@ -69,6 +69,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '631299063556',
     projectId: 'project-management-ec37f',
     storageBucket: 'project-management-ec37f.appspot.com',
+    iosClientId: '631299063556-fke1jsh2dbnib04uv5sapl8b841gbnu3.apps.googleusercontent.com',
     iosBundleId: 'com.example.projectManagement',
   );
 }

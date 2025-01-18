@@ -86,7 +86,7 @@ class RegisterBody extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   authController.clearFieldRegister();
-                  Get.back();
+                  Get.toNamed(AppRoutes.login);
                 },
                 child: RichText(
                   text: const TextSpan(

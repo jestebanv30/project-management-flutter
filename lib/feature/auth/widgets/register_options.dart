@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:project_management/core/controller/auth_controller.dart';
 import 'package:project_management/feature/auth/widgets/icon_container.dart';
 
 class RegisterOptions extends StatelessWidget {
@@ -7,11 +9,13 @@ class RegisterOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          //onTap: () => AuthFirebaseService,
+          onTap: () => authController.loginWithGoogle(),
           child: const IconContainer(
             widget: Icon(
               FontAwesomeIcons.google,

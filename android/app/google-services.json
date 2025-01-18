@@ -12,7 +12,12 @@
           "package_name": "com.app.projectmanagement"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "631299063556-gncggotfc2eg520m5mp8ig0va0qu296m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB3j9ADB_253Kv4xtdR3bUH8Jz-QUSm2pI"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "631299063556-gncggotfc2eg520m5mp8ig0va0qu296m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "631299063556-fke1jsh2dbnib04uv5sapl8b841gbnu3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.projectManagement"
+              }
+            }
+          ]
         }
       }
     }

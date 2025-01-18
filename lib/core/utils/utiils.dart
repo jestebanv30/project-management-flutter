@@ -9,7 +9,28 @@ class Utils {
   }
 
   static String extractFirebaseError(String error) {
-    return error.substring(error.indexOf(']') + 1);
+    if (error.contains('email-already-in-use')) {
+      return 'El correo ya está registrado. Usa uno diferente.';
+    } else if (error.contains('invalid-email')) {
+      return 'El correo ingresado no es válido.';
+    } else if (error.contains('user-not-found')) {
+      return 'Usuario no encontrado. Verifica tu correo.';
+    } else if (error.contains('wrong-password')) {
+      return 'Contraseña incorrecta. Inténtalo de nuevo.';
+    } else if (error.contains('too-many-requests')) {
+      return 'Demasiados intentos. Inténtalo más tarde.';
+    } else if (error.contains('network-request-failed')) {
+      return 'Error de conexión. Verifica tu conexión a internet.';
+    } else if (error.contains('internal-error')) {
+      return 'Error interno del servidor. Inténtalo más tarde.';
+    } else if (error.contains('credential-already-in-use')) {
+      return 'La credencial ya está en uso con otra cuenta.';
+    } else if (error.contains('auth/invalid-credential')) {
+      return 'Las credenciales ingresadas son incorrectas o están mal formadas.';
+    } else {
+      return "Se produjo un error desconocido. Inténtalo de nuevo.";
+      //return error.substring(error.indexOf(']') + 1);
+    }
   }
 
   static void showSnackBar(String title, String message, Widget icon) {
