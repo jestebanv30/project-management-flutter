@@ -23,6 +23,8 @@ class AuthController extends GetxController {
   final AuthFirebaseService authFirebaseService = AuthFirebaseService();
   final storage = GetStorage();
 
+  var userObservable = Rxn<User>();
+
   @override
   void onInit() {
     super.onInit();
@@ -107,10 +109,11 @@ class AuthController extends GetxController {
           await authFirebaseService.createAccount(email, password, name);
 
       if (user != null) {
+        userObservable.value = user;
         await saveCredentials(email, password);
         Utils.showSnackBar('Éxito', 'Cuenta creada exitosamente.',
             const Icon(Icons.done, color: Colors.white));
-        Get.toNamed(AppRoutes.home);
+        Get.offAllNamed(AppRoutes.home);
         clearFieldRegister();
       } else {
         Utils.showSnackBar('Error', 'No se pudo registrar el usuario.',
@@ -132,8 +135,9 @@ class AuthController extends GetxController {
 
       User? user = await authFirebaseService.loginWithEmail(email, password);
       if (user != null) {
+        userObservable.value = user;
         await saveCredentials(email, password);
-        Get.toNamed(AppRoutes.home);
+        Get.offAllNamed(AppRoutes.home);
         clearFieldRegister();
       } else {
         Utils.showSnackBar('Error', 'No se iniciar sesión.',
@@ -154,6 +158,7 @@ class AuthController extends GetxController {
       User? user = await authFirebaseService.loginWithGoogle();
 
       if (user != null) {
+        userObservable.value = user;
         Utils.showSnackBar(
             'Éxito',
             'Inicio de sesión exitoso.',
@@ -161,7 +166,7 @@ class AuthController extends GetxController {
               Icons.done,
               color: Colors.white,
             ));
-        Get.toNamed(AppRoutes.home);
+        Get.offAllNamed(AppRoutes.home);
       } else {
         Utils.showSnackBar(
             'Advertencia',
@@ -172,7 +177,6 @@ class AuthController extends GetxController {
             ));
       }
     } catch (e) {
-      print('Error de firebase: $e');
       Utils.showSnackBar(
           'Error',
           Utils.extractFirebaseError(e.toString()),
@@ -187,6 +191,16 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     await authFirebaseService.signOut();
+    await clearCredentials();
+    userObservable.value = null;
+    Get.offAllNamed(AppRoutes.login);
+    Utils.showSnackBar(
+        'Sesión cerrada',
+        'Hasta pronto',
+        const Icon(
+          Icons.done,
+          color: Colors.white,
+        ));
   }
 
   Future<void> autoLogin() async {

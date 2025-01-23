@@ -33,8 +33,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: darkBackgroundColor,
         primaryColor: primaryColor,
       ),
-      themeMode:
-          themeProvider.themeMode, // Cambia dinámicamente segun el estado
+      themeMode: ThemeMode.light, // Cambia dinámicamente segun el estado
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.welcome,
       getPages: AppRoutes.pages,

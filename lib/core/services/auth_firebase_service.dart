@@ -19,8 +19,9 @@ class AuthFirebaseService {
         final idDoc = email.substring(0, email.indexOf('@'));
         await firestore.collection('Accounts').doc(idDoc).set({
           'name': name,
-          'email': email,
-          'createdAt': FieldValue.serverTimestamp(),
+          'email': user.email,
+          'photoURL': user.photoURL ?? '',
+          'createAt': FieldValue.serverTimestamp(),
         });
       }
       return user;
@@ -63,7 +64,19 @@ class AuthFirebaseService {
 
       UserCredential userCredential =
           await auth.signInWithCredential(credential);
-      return userCredential.user;
+
+      User? user = userCredential.user;
+
+      if (user != null) {
+        final idDoc = user.email!.split('@')[0];
+        await firestore.collection('Accounts').doc(idDoc).set({
+          'name': user.displayName ?? '',
+          'email': user.email,
+          'photoURL': user.photoURL ?? '',
+          'createAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+      }
+      return user;
     } catch (e) {
       rethrow;
     }
